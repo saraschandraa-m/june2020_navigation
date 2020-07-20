@@ -15,12 +15,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private FragmentTransaction fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         toolbarTitle.setText("Navigation");
-//        toolbarTitle.setTextColor(R.color.colorAccent);
         toolbarTitle.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        fm = getSupportFragmentManager().beginTransaction();
 
     }
 
@@ -83,6 +86,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.action_home:
                 startActivity(new Intent(MainActivity.this, BottomNavigationActivity.class));
+                break;
+
+            case R.id.action_search:
+//                Intent intent =new Intent(FromActivity, DestinationActivity);
+//                startActivity();
+
+
+                fm.replace(R.id.fragment_holder, new SearchFragment()).commit();
+                break;
+
+            case R.id.action_logout:
+                fm.replace(R.id.fragment_holder, new LogoutFragment()).commit();
                 break;
         }
         return false;
