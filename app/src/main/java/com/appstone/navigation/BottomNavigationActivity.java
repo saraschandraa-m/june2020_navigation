@@ -28,6 +28,7 @@ public class BottomNavigationActivity extends AppCompatActivity implements Botto
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
         switch (item.getItemId()){
             case R.id.action_home:
                 onBackPressed();

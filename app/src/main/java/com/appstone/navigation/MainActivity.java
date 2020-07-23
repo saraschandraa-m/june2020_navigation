@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
 
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        fm = getSupportFragmentManager().beginTransaction();
 
     }
 
@@ -83,21 +81,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
+        fm = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId()) {
             case R.id.action_home:
-                startActivity(new Intent(MainActivity.this, BottomNavigationActivity.class));
+
+                startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
                 break;
 
             case R.id.action_search:
 //                Intent intent =new Intent(FromActivity, DestinationActivity);
 //                startActivity();
 
+                Bundle args = new Bundle();
+                args.putString("TITLE", "Search Fragment");
 
-                fm.replace(R.id.fragment_holder, new SearchFragment()).commit();
+
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setArguments(args);
+
+                fm.replace(R.id.fragment_holder, searchFragment).commit();
                 break;
 
             case R.id.action_logout:
-                fm.replace(R.id.fragment_holder, new LogoutFragment()).commit();
+
+                Bundle args1 = new Bundle();
+                args1.putString("TITLE", "Logout Fragment");
+
+
+                LogoutFragment logoutFragment = new LogoutFragment();
+                logoutFragment.setArguments(args1);
+                fm.replace(R.id.fragment_holder, logoutFragment).commit();
                 break;
         }
         return false;
